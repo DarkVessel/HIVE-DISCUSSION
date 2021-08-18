@@ -1,0 +1,7 @@
+infoboard?type=[account, project, all]&id=[айди аккаунта или проекта] - страница с просмотром аккаунтов и проектов.
+или
+list?type=[account, peoject, all] - список проектов и/или аккаунтов.
+account?id=[айди аккаунта]
+project?id=[айди проекта]
+далее:
+dashboard?type=[account, project, all] - страница управления аккаунтами и проектами.

@@ -1,0 +1,24 @@
+{
+  "name": "hive-discussion",
+  "version": "0.0.1",
+  "description": "HIVE DISCUSSION",
+  "main": ".",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ClintFlames/HIVE-DISCUSSION.git"
+  },
+  "keywords": [
+    "hive",
+    "discussion",
+    "node",
+    "js"
+  ],
+  "author": "ClintFlames",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "bugs": {
+    "url": "https://github.com/ClintFlames/HIVE-DISCUSSION/issues"
+  },
+  "homepage": "https://github.com/ClintFlames/HIVE-DISCUSSION#readme"
+}
