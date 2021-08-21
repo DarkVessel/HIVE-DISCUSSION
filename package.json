@@ -1,24 +1,29 @@
 {
-  "name": "hive-discussion",
-  "version": "0.0.1",
-  "description": "HIVE DISCUSSION",
-  "main": ".",
-  "scripts": {
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ClintFlames/HIVE-DISCUSSION.git"
-  },
-  "keywords": [
-    "hive",
-    "discussion",
-    "node",
-    "js"
-  ],
-  "author": "ClintFlames",
-  "license": "SEE LICENSE IN LICENSE.txt",
-  "bugs": {
-    "url": "https://github.com/ClintFlames/HIVE-DISCUSSION/issues"
-  },
-  "homepage": "https://github.com/ClintFlames/HIVE-DISCUSSION#readme"
+	"name": "hive-discussion",
+	"version": "0.0.2",
+	"description": "HIVE DISCUSSION",
+	"main": "server/manager.js",
+	"scripts": {
+		"test": "node ./server/manager.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ClintFlames/HIVE-DISCUSSION.git"
+	},
+	"keywords": [
+		"hive",
+		"discussion",
+		"node",
+		"js"
+	],
+	"author": "ClintFlames",
+	"license": "SEE LICENSE IN LICENSE.txt",
+	"bugs": {
+		"url": "https://github.com/ClintFlames/HIVE-DISCUSSION/issues"
+	},
+	"homepage": "https://github.com/ClintFlames/HIVE-DISCUSSION#readme",
+	"dependencies": {
+		"express": "^4.17.1",
+		"mouse-db.json": "^1.0.4"
+	}
 }
