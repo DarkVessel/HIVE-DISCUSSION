@@ -27,21 +27,36 @@ api.use((req, res, next) => {
 			return next();
 		}
 	}
-	return res.send("[\"error\",0]");
+	res.send("[\"error\",0]");
 });
 
 
 
 api.post("/users", (req, res) => { res.send(JSON.stringify(users.safe.get())); });
+api.post("/users/this", (req, res) => { res.send(req.user); });
 api.post("/users/get/:id", (req, res) => { res.send(JSON.stringify(users.safe.get().find((v) => { return v.id == req.params.id; }))); });
-api.post("/users/set/:id", (req, res) => {
-	console.log(req.user)
-});
 api.post("/users/new/:id", (req, res) => {
-	
+	if (req.user.permissions & permissions.users.new) {
+		// something
+		return console.log("y");
+	}
+	res.send("[\"error\",1," + permissions.users.new +"]");
+});
+api.post("/users/set/:id", (req, res) => {
+	console.log(req.user.permissions);
+	console.log(permissions.users.set);
+	if (req.user.permissions & permissions.users.set) {
+		// something
+		return console.log("y");
+	}
+	res.send("[\"error\",1," + permissions.users.set +"]");
 });
 api.post("/users/del/:id", (req, res) => {
-	
+	if (req.user.permissions & permissions.users.del) {
+		// something
+		return console.log("y");
+	}
+	res.send("[\"error\",1," + permissions.users.del +"]");
 });
 
 module.exports = api;

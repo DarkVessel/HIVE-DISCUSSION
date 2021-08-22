@@ -1,9 +1,16 @@
-<a name="begin"></a> Добро пожаловать в документацию по HIVE DISCUSSION.
+# <a name="begin"></a> Добро пожаловать в документацию по HIVE DISCUSSION.
 
 Навигация: <nav>
 	<ul>
-		<li><a href="">
-			ничего
-		</a></li>
+		<li>[API](#api)</li>
+	</ul>
+</nav>
+
+
+### <a name="api"></a> API
+<nav>
+	<ul>
+		<li>[Руководство по запросам.]()</li>
+		<li>[Руководство по ошибкам.]()</li>
 	</ul>
 </nav>

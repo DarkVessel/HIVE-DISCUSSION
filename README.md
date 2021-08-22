@@ -1,2 +1,2 @@
 # HIVE DISCUSSION
-[RU DOCS](./DOCS/RU/WELCOME.md)
+[Русская документация](./DOCS/RU/WELCOME.md)

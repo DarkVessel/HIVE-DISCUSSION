@@ -9,7 +9,7 @@
 		"safe": [
 			{
 				"id": "dev_zero",
-				"permissions": 0
+				"permissions": 2
 			}
 		]
 	},
