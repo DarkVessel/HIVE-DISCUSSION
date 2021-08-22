@@ -1,4 +1,6 @@
-users/:id
-projects/:id
-далее:
+api/
+	get/:id
+	set/:id
+	new/:id
+	del/:id
 dashboard?type=[user, project, all] - страница управления аккаунтами и проектами.

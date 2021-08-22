@@ -3,13 +3,13 @@
 		"unsafe": [
 			{
 				"id": "dev_zero",
-				"api_key": "qW23RT6&&^5N</>/o885fgjUUki0)(8"
+				"api_key": "apikey"
 			}
 		],
 		"safe": [
 			{
 				"id": "dev_zero",
-				"link": "of course"
+				"permissions": 0
 			}
 		]
 	},
