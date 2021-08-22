@@ -1,0 +1,17 @@
+{
+	"users": {
+		"unsafe": [
+			{
+				"id": "dev_zero",
+				"api_key": "qW23RT6&&^5N</>/o885fgjUUki0)(8"
+			}
+		],
+		"safe": [
+			{
+				"id": "dev_zero",
+				"link": "of course"
+			}
+		]
+	},
+	"projects": []
+}
