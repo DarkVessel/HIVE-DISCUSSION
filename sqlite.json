@@ -4,12 +4,20 @@
 			{
 				"id": "dev_zero",
 				"api_key": "apikey"
+			},
+			{
+				"id": "test",
+				"api_key": "ak"
 			}
 		],
 		"safe": [
 			{
 				"id": "dev_zero",
-				"permissions": 2
+				"permissions": 4
+			},
+			{
+				"id": "test",
+				"permissions": 0
 			}
 		]
 	},
