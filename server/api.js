@@ -31,10 +31,18 @@ api.use((req, res, next) => {
 });
 
 
-
+// Sends users.safe.
 api.post("/users", (req, res) => { res.send(JSON.stringify(users.safe.get())); });
+// Sends user from users.safe that doing requests.
 api.post("/users/this", (req, res) => { res.send(req.user); });
-api.post("/users/get/:id", (req, res) => { res.send(JSON.stringify(users.safe.get().find((v) => { return v.id == req.params.id; }))); });
+// Sends user from users.safe by id.
+api.post("/users/get/:id", (req, res) => {
+	const user = users.safe.get().find((v) => { return v.id == req.params.id; });
+	if (user) {
+		return res.send(JSON.stringify(user));
+	}
+	res.send("[\"error\",2," + req.params.id +"]");
+});
 api.post("/users/new/:id", (req, res) => {
 	if (req.user.permissions & permissions.users.new) {
 		// something
@@ -51,10 +59,15 @@ api.post("/users/set/:id", (req, res) => {
 	}
 	res.send("[\"error\",1," + permissions.users.set +"]");
 });
+// Deletes user by id.
 api.post("/users/del/:id", (req, res) => {
 	if (req.user.permissions & permissions.users.del) {
-		// something
-		return console.log("y");
+		const user = users.safe.get().find((v) => { return v.id == req.params.id; });
+		if (user) {
+			// DELETE NACTIONS HERE
+			return res.send(1);
+		}
+		return res.send("[\"error\",2," + req.params.id +"]");
 	}
 	res.send("[\"error\",1," + permissions.users.del +"]");
 });
