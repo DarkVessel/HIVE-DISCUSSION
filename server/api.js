@@ -1,34 +1,40 @@
-/* IMPORTS AND VARIABLES */
+/* VARIABLES */
+
+// Imports database.
 const { table } = require("mouse-db.json");
 const users = {
 	unsafe: new table("users.unsafe"),
 	safe: new table("users.safe")
 }
 const projects = new table("projects");
-
+// Setup api Router.
 const express = require("express");
 const api = express.Router();
-
+// Imports and define data for for work.
 const global_path = __dirname.split("/").slice(0, __dirname.split("/").length - 1).join("/");
 const permissions = require("./src/permissions.js");
 
-
+/* MIDDLEWARES */
 
 // MiddleWare for parsing body to object (check req.body).
 api.use(express.json({ limit: "100kb" }));
 api.use(express.urlencoded({ limit: "100kb", extended: true }));
 
-// MiddleWare for check session if needed.
+// MiddleWare for check api_key and request type.
 api.use((req, res, next) => {
-	if (req.body.api_key) {
-		const user_id = users.unsafe.get().find((v) => { return v.api_key == req.body.api_key })?.id;
-		if (user_id) {
-			req.user = users.safe.get().find((v) => { return v.id == user_id; });
-			return next();
+	if (req.method == "POST") {
+		if (req.body.api_key) {
+			const user_id = users.unsafe.get().find((v) => { return v.api_key == req.body.api_key })?.id;
+			if (user_id) {
+				req.user = users.safe.get().find((v) => { return v.id == user_id; });
+				return next();
+			}
 		}
+		return res.send("[\"error\",0]");
 	}
-	res.send("[\"error\",0]");
+	res.send("[\"error\",3," + req.method +"]")
 });
+
 
 
 // Sends users.safe.
@@ -51,8 +57,6 @@ api.post("/users/new/:id", (req, res) => {
 	res.send("[\"error\",1," + permissions.users.new +"]");
 });
 api.post("/users/set/:id", (req, res) => {
-	console.log(req.user.permissions);
-	console.log(permissions.users.set);
 	if (req.user.permissions & permissions.users.set) {
 		// something
 		return console.log("y");
@@ -64,7 +68,7 @@ api.post("/users/del/:id", (req, res) => {
 	if (req.user.permissions & permissions.users.del) {
 		const user = users.safe.get().find((v) => { return v.id == req.params.id; });
 		if (user) {
-			// DELETE NACTIONS HERE
+			// DELETE ACTIONS HERE
 			return res.send(1);
 		}
 		return res.send("[\"error\",2," + req.params.id +"]");

@@ -1,5 +1,6 @@
-# VSCode
-.vscode/
+dev_only/
+projects/**
+
 
 node_modules/
 package-lock.json
