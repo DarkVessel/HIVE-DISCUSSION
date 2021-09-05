@@ -7,9 +7,9 @@ const app = express();
 app.use("/api", require(__dirname + "/api.js"));
 
 
-app.listen(80)
+app.listen(81)
 /*
-curl -X POST http://localhost/api/users/get/no -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{
-	"api_key": "apikey"
+curl -X POST http://localhost:81/api/users/new/lol -H 'Cache-Control: no-cache' -H 'Content-Type: application/json' -d '{
+
 }'
 */

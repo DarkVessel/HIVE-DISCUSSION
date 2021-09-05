@@ -8,6 +8,8 @@
     <li><a href="#1">1 - Invalid permission.</a></li>
     <li><a href="#2">2 - Invalid user.</a></li>
     <li><a href="#3">3 - Invalid request method.</a></li>
+    <li><a href="#4">4 - Invalid project.</a></li>
+    <li><a href="#5">5 - This user already exist.</a></li>
   </ul>
 </nav>
 
@@ -64,6 +66,34 @@
 
 ```js
 ["error",3,неверный метод]
+```
+
+  <a href="#begin">В начало.</a>
+</div>
+
+
+
+<div name="4">
+  <h3>4 - Invalid project.</h3>
+  <p>Возникает при попытке взаимодействия с проектом которого нет или был удален (Ошибка также выдает айди проекта).</p>
+  Возвращает:
+
+```js
+["error",4,айди неверного проекта]
+```
+
+  <a href="#begin">В начало.</a>
+</div>
+
+
+
+<div name="5">
+  <h3>5 - This user already exist.</h3>
+  <p>Возникает при попытке создать пользователя с уже существующим айди.</p>
+  Возвращает:
+
+```js
+["error",5,айди существующего пользователя]
 ```
 
   <a href="#begin">В начало.</a>

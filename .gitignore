@@ -1,5 +1,6 @@
 dev_only/
-projects/**
+server/projects/*
+
 
 
 node_modules/
