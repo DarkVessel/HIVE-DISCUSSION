@@ -5,6 +5,8 @@ const app = express();
 
 // Imports api Router.
 app.use("/api", require(__dirname + "/api.js"));
+// Users avatars.
+app.use("/avatars", express.static(__dirname + "/src/avatars"));
 
 
 app.listen(81)

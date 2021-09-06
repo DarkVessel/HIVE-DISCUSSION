@@ -1,5 +1,11 @@
 {
 	"users": {
+		"invite": {
+			"inv1": {
+				"usage": 1,
+				"max_usage": 1
+			}
+		},
 		"unsafe": [
 			{
 				"id": "dev_zero",

@@ -1,5 +1,3 @@
-/* VARIABLES */
-
 // Imports database.
 const { table } = require("mouse-db.json");
 const users = {
@@ -18,14 +16,12 @@ const User = require("./classes/User.js");
 
 
 
-/* MIDDLEWARES */
-
 // MiddleWare for parsing body to object (check req.body).
 api.use(express.json({ limit: "100kb" }));
 api.use(express.urlencoded({ limit: "100kb", extended: true }));
 
 // Creates new user and sends created user.unsafe and user.safe.
-api.post("/users/new/:id", (req, res) => {
+api.post("/users/new/i/:id", (req, res) => {
 	if (typeof(req.body.options) != "object" ) { req.body.options = {} }
 	if (Array.isArray(req.body.options)) { req.body.options = {} }
 	if (!users.safe.get().find((v) => { return v.id == req.params.id; })) {
@@ -55,8 +51,6 @@ api.use((req, res, next) => {
 
 
 
-/* WORK WITH USERS. */
-
 // Sends users.safe.
 api.post("/users", (req, res) => { res.send(JSON.stringify(users.safe.get())); });
 // Sends user from users.safe that doing requests.
@@ -68,6 +62,22 @@ api.post("/users/get/:id", (req, res) => {
 		return res.send(JSON.stringify(user));
 	}
 	res.send("[\"error\",2," + req.params.id +"]");
+});
+// Creates new user and sends created user.unsafe and user.safe.
+api.post("/users/new/:id", (req, res) => {
+	if (req.user.permissions & permissions.users.new) {
+		if (typeof(req.body.options) != "object" ) { req.body.options = {} }
+		if (Array.isArray(req.body.options)) { req.body.options = {} }
+		if (!users.safe.get().find((v) => { return v.id == req.params.id; })) {
+			req.body.options.id = req.params.id;
+			const user = new User(req.body.options);
+			users.unsafe.push(user.unsafe);
+			users.safe.push(user.safe);
+			return res.send(JSON.stringify(user));
+		}
+		return res.send("[\"error\",5," + req.params.id +"]");
+	}
+	res.send("[\"error\",1," + permissions.users.new +"]");
 });
 // Sets user by id.
 api.post("/users/set/:id", (req, res) => {
@@ -92,7 +102,14 @@ api.post("/users/del/:id", (req, res) => {
 
 
 
-/* WORK WITH PROJECTS. */
+// Deletes user by id.
+api.post("/users/invite/new/:name", (req, res) => {
+	if (req.user.permissions & permissions.users.invite.new) {
+	}
+	res.send("[\"error\",1," + permissions.users.invite.new +"]");
+});
+
+
 
 // Sends projects.
 api.post("/projects", (req, res) => { res.send(JSON.stringify(projects.get())); });
