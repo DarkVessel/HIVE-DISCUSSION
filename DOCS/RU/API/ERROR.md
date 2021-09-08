@@ -10,6 +10,9 @@
     <li><a href="#3">3 - Invalid request method.</a></li>
     <li><a href="#4">4 - Invalid project.</a></li>
     <li><a href="#5">5 - This user already exist.</a></li>
+    <!--add these next-->
+    <li><a href="#6">6 - Invalid user invite.</a></li>
+    <li><a href="#7">7 - This user invite already exist.</a></li>
   </ul>
 </nav>
 
@@ -94,6 +97,33 @@
 
 ```js
 ["error",5,айди существующего пользователя]
+```
+
+  <a href="#begin">В начало.</a>
+</div>
+
+
+
+<div name="">
+  <h3> - .</h3>
+  <p>.</p>
+  Возвращает:
+
+```js
+```
+
+  <a href="#begin">В начало.</a>
+</div>
+
+
+
+<div name="7">
+  <h3>7 - This user invite already exist.</h3>
+  <p>Возникает при попытке создать пользовательское приглашение с уже существующим айди.</p>
+  Возвращает:
+
+```js
+["error",5,айди существующего пользовательского приглашения]
 ```
 
   <a href="#begin">В начало.</a>

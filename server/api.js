@@ -2,7 +2,8 @@
 const { table } = require("mouse-db.json");
 const users = {
 	unsafe: new table("users.unsafe"),
-	safe: new table("users.safe")
+	safe: new table("users.safe"),
+	invite: new table("users.invite")
 }
 const projects = new table("projects");
 // Setup api Router.
@@ -13,6 +14,7 @@ const global_path = __dirname.split("/").slice(0, __dirname.split("/").length - 
 const permissions = require("./src/permissions.js");
 const Project = require("./classes/Project.js");
 const User = require("./classes/User.js");
+const UserInvite = require("./classes/UserInvite.js")
 
 
 
@@ -24,29 +26,21 @@ api.use(express.urlencoded({ limit: "100kb", extended: true }));
 api.post("/users/new/i/:id", (req, res) => {
 	if (typeof(req.body.options) != "object" ) { req.body.options = {} }
 	if (Array.isArray(req.body.options)) { req.body.options = {} }
-	if (!users.safe.get().find((v) => { return v.id == req.params.id; })) {
-		req.body.options.id = req.params.id;
-		const user = new User(req.body.options);
-		users.unsafe.push(user.unsafe);
-		users.safe.push(user.safe);
-		return res.send(JSON.stringify(user));
-	}
-	return res.send("[\"error\",5," + req.params.id +"]");
+	if (users.safe.get().find((v) => { return v.id == req.params.id; })) { return res.send("[\"error\",5," + req.params.id +"]"); }
+	req.body.options.id = req.params.id;
+	const user = new User(req.body.options);
+	users.unsafe.push(user.unsafe);
+	users.safe.push(user.safe);
+	res.send(JSON.stringify(user));
 });
 
 // MiddleWare for check api_key and request type.
 api.use((req, res, next) => {
-	if (req.method == "POST") {
-		if (req.body.api_key) {
-			const user_id = users.unsafe.get().find((v) => { return v.api_key == req.body.api_key })?.id;
-			if (user_id) {
-				req.user = users.safe.get().find((v) => { return v.id == user_id; });
-				return next();
-			}
-		}
-		return res.send("[\"error\",0]");
-	}
-	res.send("[\"error\",3," + req.method +"]")
+	if (req.method != "POST") { return res.send("[\"error\",3," + req.method +"]"); }
+	const user_id = users.unsafe.get().find((v) => { return v.api_key == req.body.api_key })?.id;
+	if (!user_id) { return res.send("[\"error\",0]"); }
+	req.user = users.safe.get().find((v) => { return v.id == user_id; });
+	next();
 });
 
 
@@ -58,26 +52,20 @@ api.post("/users/this", (req, res) => { res.send(req.user); });
 // Sends user from users.safe by id.
 api.post("/users/get/:id", (req, res) => {
 	const user = users.safe.get().find((v) => { return v.id == req.params.id; });
-	if (user) {
-		return res.send(JSON.stringify(user));
-	}
-	res.send("[\"error\",2," + req.params.id +"]");
+	if (!user) { return res.send("[\"error\",2," + req.params.id +"]"); }
+	res.send(JSON.stringify(user));
 });
 // Creates new user and sends created user.unsafe and user.safe.
 api.post("/users/new/:id", (req, res) => {
-	if (req.user.permissions & permissions.users.new) {
-		if (typeof(req.body.options) != "object" ) { req.body.options = {} }
-		if (Array.isArray(req.body.options)) { req.body.options = {} }
-		if (!users.safe.get().find((v) => { return v.id == req.params.id; })) {
-			req.body.options.id = req.params.id;
-			const user = new User(req.body.options);
-			users.unsafe.push(user.unsafe);
-			users.safe.push(user.safe);
-			return res.send(JSON.stringify(user));
-		}
-		return res.send("[\"error\",5," + req.params.id +"]");
-	}
-	res.send("[\"error\",1," + permissions.users.new +"]");
+	if (req.user.permissions & permissions.users.new) { return res.send("[\"error\",1," + permissions.users.new +"]"); }
+	if (users.safe.get().find((v) => { return v.id == req.params.id; })) { return res.send("[\"error\",5," + req.params.id +"]"); }
+	if (typeof(req.body.options) != "object" ) { req.body.options = {} }
+	if (Array.isArray(req.body.options)) { req.body.options = {} }
+	req.body.options.id = req.params.id;
+	const user = new User(req.body.options);
+	users.unsafe.push(user.unsafe);
+	users.safe.push(user.safe);
+	res.send(JSON.stringify(user));
 });
 // Sets user by id.
 api.post("/users/set/:id", (req, res) => {
@@ -102,11 +90,16 @@ api.post("/users/del/:id", (req, res) => {
 
 
 
-// Deletes user by id.
+// Makes a new user invite.
 api.post("/users/invite/new/:name", (req, res) => {
-	if (req.user.permissions & permissions.users.invite.new) {
-	}
-	res.send("[\"error\",1," + permissions.users.invite.new +"]");
+	if (req.user.permissions & permissions.users.invite.new) { return res.send("[\"error\",1," + permissions.users.invite.new +"]"); }
+	// not work
+	if (users.invite._checkKey(req.params.name)) { return res.send("\"error\",7," + req.params.name + "]"); }
+	if (typeof(req.body.options) != "object" ) { req.body.options = {} }
+	if (Array.isArray(req.body.options)) { req.body.options = {} }
+	req.body.options.name = req.params.name;
+	const user_invite = new UserInvite(req.body.options);
+	console.log(user_invite);
 });
 
 
@@ -117,6 +110,7 @@ api.post("/projects", (req, res) => { res.send(JSON.stringify(projects.get())); 
 api.post("/projects/:id", (req, res) => {
 	if (projects.get().indexOf(req.params.id) != -1) {
 		return res.send(1);
+		// something
 	}
 	res.send("[\"error\",4," + req.params.id + "]");
 });
