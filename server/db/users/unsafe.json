@@ -1,0 +1,12 @@
+[
+	{
+		"id": "dev_zero",
+		"api_key": "apikey",
+		"password": "nou"
+	},
+	{
+		"id": "test",
+		"api_key": "ak",
+		"password": "masterkey"
+	}
+]

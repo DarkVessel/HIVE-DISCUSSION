@@ -1,0 +1,10 @@
+[
+	{
+		"id": "dev_zero",
+		"permissions": 8
+	},
+	{
+		"id": "test",
+		"permissions": 0
+	}
+]

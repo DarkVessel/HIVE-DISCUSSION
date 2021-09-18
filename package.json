@@ -1,6 +1,6 @@
 {
 	"name": "hive-discussion",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"description": "HIVE DISCUSSION",
 	"main": "server/manager.js",
 	"scripts": {
@@ -24,6 +24,6 @@
 	"homepage": "https://github.com/ClintFlames/HIVE-DISCUSSION#readme",
 	"dependencies": {
 		"express": "^4.17.1",
-		"mouse-db.json": "^1.0.4"
+		"mouse-db.json": "^2.0.1"
 	}
 }
